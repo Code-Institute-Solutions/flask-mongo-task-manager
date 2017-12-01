@@ -17,7 +17,10 @@ def get_tasks():
     
 @app.route('/add_task')
 def add_task():
-    return render_template('addtask.html')
+    _categories = mongo.db.categories.find()
+    category_list = [category for category in _categories]
+    return render_template('addtask.html', categories = category_list )
+    
 
     
 if __name__ == '__main__':
