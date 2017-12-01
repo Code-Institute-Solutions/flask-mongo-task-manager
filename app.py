@@ -21,6 +21,31 @@ def add_task():
     category_list = [category for category in _categories]
     return render_template('addtask.html', categories = category_list )
     
+@app.route('/insert_task', methods=['POST'])
+def insert_task():
+    tasks =  mongo.db.tasks
+    
+    checked_urgent = request.form.get("is_urgent", None)
+    if checked_urgent:
+        checked_urgent = True
+    else:
+         checked_urgent = False
+    
+    task_description = request.form.get("task_description", None)
+    due_date = request.form.get("due_date", None)
+    
+    task_doc = {
+        'task_name': request.form['task_name'],
+        'category_name': request.form['category_name'],
+        'task_description': task_description,
+        'due_date': due_date,
+        'is_urgent': checked_urgent
+    }
+    
+    tasks.insert_one(task_doc)
+    
+    return redirect(url_for('get_tasks'))
+    
 
     
 if __name__ == '__main__':
