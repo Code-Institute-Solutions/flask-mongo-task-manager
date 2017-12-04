@@ -4,5 +4,6 @@ Jinja2==2.10
 MarkupSafe==1.0
 Werkzeug==0.12.2
 click==6.7
+gunicorn==19.7.1
 itsdangerous==0.24
 pymongo==3.5.1
