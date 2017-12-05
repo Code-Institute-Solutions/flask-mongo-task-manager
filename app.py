@@ -10,6 +10,8 @@ app.config["MONGO_URI"] = 'mongodb://admin:admin@ds123926.mlab.com:23926/task_ma
 mongo = PyMongo(app)
 
 
+#---------------------Tasks------------------------- 
+
 @app.route('/get_tasks')
 def get_tasks():
     _tasks = mongo.db.tasks.find()
@@ -83,6 +85,25 @@ def delete_task(task_id):
     mongo.db.tasks.remove({'_id': ObjectId(task_id)})
     return redirect(url_for('get_tasks'))
     
+#---------------------Categories------------------------- 
+
+@app.route('/get_categories')  
+def get_categories():
+    _categories = mongo.db.categories.find()
+    category_list = [category for category in _categories]
+    return render_template('categories.html', categories = category_list)
+    
+@app.route('/edit_category/<category_id>')    
+def edit_category(category_id):
+    _category = mongo.db.categories.find_one({'_id': ObjectId(category_id)})
+    return render_template('editcategory.html', category = _category)
+    
+@app.route('/update_category/<category_id>', methods=['POST']) 
+def update_category(category_id):
+    _categories = mongo.db.categories
+    _categories.update(
+        {"_id": ObjectId(category_id)},{ "category_name": request.form["category_name"]})
+    return redirect(url_for("get_categories"))
     
     
 if __name__ == '__main__':
