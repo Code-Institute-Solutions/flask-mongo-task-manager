@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, redirect, url_for, request
 from flask_pymongo import PyMongo
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 app.config["MONGO_DBNAME"] = 'task_manager'
@@ -43,14 +44,45 @@ def insert_task():
     }
     
     tasks.insert_one(task_doc)
-    
     return redirect(url_for('get_tasks'))
     
 
     
+@app.route('/edit_task/<task_id>')
+def edit_task(task_id):
+    _task =  mongo.db.tasks.find_one({"_id": ObjectId(task_id)})
+    _categories = mongo.db.categories.find()
+    category_list = [category for category in _categories]
+    return render_template('edittask.html', task =_task, categories = category_list)
+    
+ 
+@app.route('/update_task/<task_id>', methods=['POST'])
+def update_task(task_id):
+    tasks =  mongo.db.tasks
+    
+    checked_urgent = request.form.get("is_urgent", None)
+    if checked_urgent:
+        checked_urgent = True
+    else:
+         checked_urgent = False
+    
+    task_description = request.form.get("task_description", None)
+    due_date = request.form.get("due_date", None)
+    
+    tasks.update(
+        { "_id":ObjectId(task_id)},
+        {'task_name': request.form['task_name'],
+        'category_name': request.form['task_name'],
+        'task_description':task_description,
+        'due_date': due_date,
+        'is_urgent' : checked_urgent
+    })
+    return redirect(url_for('get_tasks'))  
+    
+    
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
-    port=int(os.environ.get('PORT')),
-    debug=True)
+        port=int(os.environ.get('PORT')),
+        debug=True)
 
     

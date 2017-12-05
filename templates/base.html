@@ -4,10 +4,27 @@
 <head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css" />
+    <style type="text/css">
+        .btn_small {
+            height: 24px;
+            width: 60px;
+            line-height: 24px;
+            margin: 5px 5px;
+            padding: 0 0.5em;
+        }
+
+        .task_header {
+            margin-left: 50px;
+            margin-top: 8px;
+        }
+    </style>
 </head>
 
 <body>
-    {% block content %} {% endblock %}
+    
+        {% block content %} {% endblock %}
+   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     <script type="text/javascript">
