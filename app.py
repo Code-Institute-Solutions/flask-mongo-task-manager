@@ -47,7 +47,6 @@ def insert_task():
     return redirect(url_for('get_tasks'))
     
 
-    
 @app.route('/edit_task/<task_id>')
 def edit_task(task_id):
     _task =  mongo.db.tasks.find_one({"_id": ObjectId(task_id)})
@@ -77,7 +76,13 @@ def update_task(task_id):
         'due_date': due_date,
         'is_urgent' : checked_urgent
     })
-    return redirect(url_for('get_tasks'))  
+    return redirect(url_for('get_tasks'))
+    
+@app.route('/delete_task/<task_id>')    
+def delete_task(task_id):
+    mongo.db.tasks.remove({'_id': ObjectId(task_id)})
+    return redirect(url_for('get_tasks'))
+    
     
     
 if __name__ == '__main__':
