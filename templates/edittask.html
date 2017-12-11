@@ -52,4 +52,11 @@
         </div>
     </form>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        due_date = Date.parse('{{task.due_date}}');
+        $('#due_date').pickadate('picker').set('select', due_date, { format: 'dd/mm/yyyy' }).trigger('change');
+    });
+</script>
 {% endblock %}
