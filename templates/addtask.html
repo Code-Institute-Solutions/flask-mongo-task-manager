@@ -3,6 +3,18 @@
 <div class="row">
     <form action="" method="POST" class="col s12">
         <div class="row">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">poll</i>
+                    <select id="category" name="category_name">
+                  <option value="" disabled selected>Choose Category</option>
+                  {% for cat in categories %}
+                      <option value="{{cat.category_name}}">{{cat.category_name}}</option>
+                  {% endfor %}
+                </select>
+                    <label>Task Category</label>
+                </div>
+            </div>
             <div class="input-field col s12">
                 <i class="material-icons prefix">assignment</i>
                 <input id="task_name" name="task_name" type="text">
