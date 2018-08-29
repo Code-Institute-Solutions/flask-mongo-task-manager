@@ -9,3 +9,7 @@
 .task_header {
     margin-top: 5px;
 }
+
+.collapsible-header form {
+    display: inline-block;
+}
