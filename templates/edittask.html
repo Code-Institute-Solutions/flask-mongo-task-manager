@@ -1,20 +1,19 @@
-{% extends 'base.html'%} {% block content %}
+{% extends 'base.html'%}
 
+{% block content %}
 <h3>Edit Task</h3>
 <div class="row">
-    <form action="{{ url_for('edit_task') }}" method="POST" class="col s12">
+    <form action="{{ url_for('update_task', task_id=task._id) }}" method="POST" class="col s12">
+
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">poll</i>
                 <select id="category" name="category_name">
-                  <option value="" disabled selected>Choose Category</option>
-                  {% for cat in categories %}
-                      {% if cat.category_name == task.category_name%}
-                      <option value="{{cat.category_name}}" selected >{{cat.category_name}}</option>
-                      {% else %}
-                       <option value="{{cat.category_name}}">{{cat.category_name}}</option>
-                    {% endif %}
-                  {% endfor %}
+                    {% for category in categories %}
+                        <option value="{{category.category_name}}"
+                                {% if category.category_name == task.category_name %} selected {% endif %}
+                            >{{category.category_name}}</option>
+                    {% endfor %}
                 </select>
                 <label>Task Category</label>
             </div>
@@ -23,50 +22,48 @@
             <div class="input-field col s12">
                 <i class="material-icons prefix">assignment</i>
                 <input id="task_name" name="task_name" type="text" class="validate" value="{{task.task_name}}">
-                <label for="icon_prefix">Task Name</label>
+                <label for="task_name">Task Name</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">subject</i>
                 <textarea name="task_description" id="task_description" class="materialize-textarea">{{task.task_description}}</textarea>
-                <label for="icon_telephone">Task Description</label>
+                <label for="task_description">Task Description</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">today</i>
                 <input id="due_date" name="due_date" type="text" class="datepicker">
-                <label for="icon_prefix">Due Date</label>
+                <label for="due_date">Due Date</label>
             </div>
         </div>
         <div class="row">
             <div class="switch">
                 <label>
-                    {% if task.is_urgent %}
-                          <input id="is_urgent" name="is_urgent" type="checkbox" checked>
-                    {% else %}
-                         <input id="is_urgent" name="is_urgent" type="checkbox">
-                    {% endif%}
+                    <input id="is_urgent" name="is_urgent" type="checkbox"
+                        {% if task.is_urgent %} checked {% endif %}>
                   <span class="lever"></span>
                   Is Urgent
                 </label>
             </div>
         </div>
         <div class="row">
-            <button class="btn waves-effect waves-light" type="submit" name="action">Edit Task
+            <button class="btn waves-effect waves-light" type="submit" name="action">Save Changes
                 <i class="material-icons right">playlist_add</i>
              </button>
         </div>
     </form>
 </div>
+{% endblock %}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript">
+{% block additional_scripts %}
+<script src="{{ url_for('static', filename='js/task_datepicker.js') }}"></script>
+<script>
     $(document).ready(function() {
-        due_date = Date.parse('{{task.due_date}}');
-        $('#due_date').pickadate('picker').set('select', due_date, { format: 'dd/mm/yyyy' }).trigger('change');
+        preparePicker();
+        setDueDate('{{task.due_date}}');
     });
 </script>
-
 {% endblock %}
