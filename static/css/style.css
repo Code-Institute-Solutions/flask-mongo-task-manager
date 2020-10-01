@@ -1,15 +1,16 @@
-.btn_small {
-    height: 24px;
-    width: 60px;
-    line-height: 24px;
-    margin: 5px 5px;
-    padding: 0 0.5em;
+.text-shadow {
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 }
 
-.task_header {
-    margin-top: 5px;
+.flashes h4 {
+    line-height: 2;
 }
 
-.collapsible-header form {
-    display: inline-block;
+.btn-small {
+    margin: 5px;
+}
+
+.collapsible-header .col strong {
+    margin: 5px;
+    line-height: 42px;
 }
